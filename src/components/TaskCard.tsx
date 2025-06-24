@@ -89,6 +89,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, id, onEdit, onDelete, onStatu
         ref={setNodeRef}
         style={{
           ...style,
+          backgroundColor: 'white',
         }}
         className={`bg-white p-4 rounded-lg shadow-sm border-l-4 ${
         isDragging ? 'opacity-50' : ''
@@ -137,7 +138,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, id, onEdit, onDelete, onStatu
                 const timeDiff = dueDate.getTime() - today.getTime();
                 const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
                 
-                if (daysDiff <= 0) return 'bg-red-100 text-red-800';
+                if (daysDiff <= 1) return 'bg-red-100 text-red-800';
                 if (daysDiff <= 2) return 'bg-orange-100 text-orange-800';
                 return 'bg-green-100 text-green-800';
               })()
@@ -155,6 +156,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, id, onEdit, onDelete, onStatu
               className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                 priorityColors[task.priority] || 'bg-gray-100 text-gray-800'
               }`}
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                maxWidth: '100px',
+              }}
             >
               {task.priority}
             </span>
@@ -162,8 +169,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, id, onEdit, onDelete, onStatu
           <span 
             className="inline-block px-2 py-1 text-xs rounded-full"
             style={{
-              backgroundColor: 'var(--bg-light)',
-              color: 'var(--text-muted)'
+              backgroundColor: '#f3f1f9',
+              color: '#090910',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              maxWidth: '100px',
             }}
           >
             {task.category}

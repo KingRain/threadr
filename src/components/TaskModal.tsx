@@ -111,16 +111,23 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         
         <div 
-          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full relative z-10"
+          className="inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full relative z-10 drop-shadow-md"
           onClick={handleModalClick}
+          style={{
+            backgroundColor: 'var(--background)',
+            border: '1px solid var(--border)',
+          }}
         >
           <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Add New Task</h3>
+              <h3 className="text-lg leading-6 font-medium" style={{ color: 'var(--text)' }}>Add New Task</h3>
               <button
                 type="button"
                 className="text-gray-400 hover:text-gray-500"
                 onClick={onClose}
+                style={{
+                  color: 'var(--text)',
+                }}
               >
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
@@ -128,7 +135,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+                style={{
+                  color: 'var(--text)',
+                }}>
                   <PencilIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   Title *
                 </label>
@@ -144,7 +154,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
               </div>
 
               <div className="mb-4">
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+                style={{
+                  color: 'var(--text)',
+                }}>
                   <TagIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   Description
                 </label>
@@ -159,7 +172,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
               </div>
 
               <div className="mb-4">
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+                style={{
+                  color: 'var(--text)',
+                }}>
                   <TagIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   Category
                 </label>
@@ -169,14 +185,17 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
                   onChange={(e) => setFormData({ ...formData, category: e.target.value as TaskCategory })}
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
-                  {['Work', 'Personal', 'Shopping', 'Other'].map(category => (
+                  {['Work', 'Personal', 'Other'].map(category => (
                     <option key={category} value={category}>{category}</option>
                   ))}
                 </select>
               </div>
 
               <div className="mb-4">
-                <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+                style={{
+                  color: 'var(--text)',
+                }}>
                   <ClockIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   Due Date
                 </label>
@@ -191,7 +210,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
               </div>
 
               <div className="mb-4">
-                <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+                style={{
+                  color: 'var(--text)',
+                }}>
                   <PencilIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   Priority
                 </label>

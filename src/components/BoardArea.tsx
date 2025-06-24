@@ -17,12 +17,11 @@ const DroppableColumn: React.FC<{
   category: TaskCategory;
   children: React.ReactNode;
 }> = ({ category, children }) => {
-  const { setNodeRef, isOver } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: category,
   });
 
   const containerStyle = {
-    backgroundColor: isOver ? 'rgba(0, 0, 0, 0.05)' : 'var(--bg-light)',
     borderRadius: '0.5rem',
     padding: '0.8rem',
     paddingTop: '1rem',
@@ -33,8 +32,13 @@ const DroppableColumn: React.FC<{
   return (
     <div
       ref={setNodeRef}
-      className="rounded-lg shadow p-2 bg-gray-50 border border-gray-200"
-      style={containerStyle}
+      className="rounded-lg shadow-sm"
+      style={{
+        backgroundColor: 'var(--bg)',
+        ...containerStyle,
+        border: '1px solid var(--text)',
+        boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)',
+      }}
     >
       {children}
     </div>
@@ -46,13 +50,26 @@ const BoardArea: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  // Initialize boardTitle with saved value or default
+  const [boardTitle, setBoardTitle] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('boardTitle') || 'My Tasks';
+    }
+    return 'My Tasks';
+  });
+
+  // Save board title to localStorage when it changes
+  const handleTitleChange = (newTitle: string) => {
+    setBoardTitle(newTitle);
+    localStorage.setItem('boardTitle', newTitle);
+  };
   
   // Load status filter from localStorage if available
   useEffect(() => {
     try {
-      const savedFilter = localStorage.getItem('statusFilter') as StatusFilter | null;
+      const savedFilter = localStorage.getItem('statusFilter');
       if (savedFilter && ['all', 'pending', 'completed'].includes(savedFilter)) {
-        setStatusFilter(savedFilter);
+        setStatusFilter(savedFilter as StatusFilter);
       }
     } catch (error) {
       console.error('Failed to load status filter from localStorage:', error);
@@ -203,6 +220,8 @@ const BoardArea: React.FC = () => {
         task={editingTask}
       />
       <TaskHeader 
+        initialTitle={boardTitle}
+        onTitleChange={handleTitleChange}
         onAddTask={handleAddTask} 
         statusFilter={statusFilter}
         onStatusFilterChange={(filter) => setStatusFilter(filter)}

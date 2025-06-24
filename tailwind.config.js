@@ -1,17 +1,23 @@
 module.exports = {
-  darkMode: 'class', // Use class strategy for toggling
+  darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        text: '#090910',
-        background: '#f3f2f9',
-        primary: '#4b42bf',
-        secondary: '#9089e2',
-        accent: '#6358e3',
-       },
+        text: 'var(--text)',
+        background: 'var(--background)',
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
+        accent: 'var(--accent)',
+      },
+      backgroundColor: {
+        DEFAULT: 'var(--background)',
+      },
+      textColor: {
+        DEFAULT: 'var(--text)',
+      },
     },
   },
   plugins: [],

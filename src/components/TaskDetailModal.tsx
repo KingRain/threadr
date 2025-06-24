@@ -47,14 +47,18 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({ task, onClose, isOpen
         </span>
         
         <div
-          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full"
+          className="inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full"
+          style={{
+            backgroundColor: 'var(--background)',
+            border: '1px solid var(--border)',
+          }}
           onClick={(e) => e.stopPropagation()}
           role="document"
         >
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="w-full">
               <div className="flex justify-between items-center w-full">
-                <h3 className="text-xl font-semibold text-gray-900" id="modal-title">
+                <h3 className="text-xl font-semibold" id="modal-title" style={{ color: 'var(--heading)' }}>
                   {task.title}
                 </h3>
                 <div className="flex space-x-2">
@@ -86,22 +90,22 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({ task, onClose, isOpen
               <div className="mt-6 space-y-6 w-full">
                 {!task.description && (
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 mb-1">No description</h4>
+                    <h4 className="text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>No description</h4>
                   </div>
                 )}
                 {task.description && (
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 mb-1">Description</h4>
-                    <p className="text-gray-700 whitespace-pre-line">
+                    <h4 className="text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>Description</h4>
+                    <p className="whitespace-pre-line" style={{ color: 'var(--text)' }}>
                       {task.description}
                     </p>
                   </div>
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</h4>
-                    <p className="mt-1 text-sm text-gray-900">
+                  <div className="p-3 rounded-lg">
+                    <h4 className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text)' }}>Due Date</h4>
+                    <p className="mt-1 text-sm" style={{ color: 'var(--text)' }}>
                       {task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-US', { 
                         year: 'numeric', 
                         month: 'long', 
@@ -110,13 +114,13 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({ task, onClose, isOpen
                     </p>
                   </div>
                   
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Category</h4>
-                    <p className="mt-1 text-sm text-gray-900">{task.category || 'Uncategorized'}</p>
+                  <div className="p-3 rounded-lg">
+                    <h4 className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text)' }}>Category</h4>
+                    <p className="mt-1 text-sm" style={{ color: 'var(--text)' }}>{task.category || 'Uncategorized'}</p>
                   </div>
                   
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</h4>
+                  <div className="p-3 rounded-lg">
+                    <h4 className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text)' }}>Priority</h4>
                     <span 
                       className={`inline-flex items-center px-3 py-1 mt-1 rounded-full text-xs font-medium ${
                         priorityColors[task.priority as keyof typeof priorityColors] || 'bg-gray-100 text-gray-800'
@@ -126,9 +130,9 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({ task, onClose, isOpen
                     </span>
                   </div>
                   
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Status</h4>
-                    <p className="mt-1 text-sm text-gray-900">
+                  <div className="p-3 rounded-lg">
+                    <h4 className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text)' }}>Status</h4>
+                    <p className="mt-1 text-sm" style={{ color: 'var(--text)' }}>
                       {statusLabels[task.status] || task.status}
                     </p>
                   </div>
@@ -137,7 +141,9 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({ task, onClose, isOpen
             </div>
           </div>
           
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className="border-b border-t border-gray-200"></div>
+          
+          <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
               className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"

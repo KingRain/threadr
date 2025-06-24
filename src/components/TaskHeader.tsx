@@ -133,12 +133,13 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
                   className={`py-2 px-3 hover:bg-gray-50 cursor-pointer transition-colors duration-150 ${isSelected ? 'bg-indigo-50' : ''}`}
                   role="menuitem"
                   tabIndex={0}
+                  style={{ color: 'black' }}
                   onClick={() => {
                     handleStatusChange(status);
                     document.getElementById('status-menu')?.classList.add('hidden');
                   }}
                 >
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-sm" style={{ color: 'black' }}>
                     <div className="flex items-center">
                       {status === 'pending' && (
                         <ClockIcon className="w-4 h-4 mr-2 text-yellow-500" />
@@ -149,7 +150,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
                       {status === 'all' && (
                         <div className="w-4 h-4 mr-2 rounded-full bg-gray-500" />
                       )}
-                      <span className="font-medium">
+                      <span className="font-medium" style={{ color: 'black' }}>
                         {status.charAt(0).toUpperCase() + status.slice(1)}
                       </span>
                     </div>

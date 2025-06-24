@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Cog6ToothIcon } from '@heroicons/react/24/outline';
+import SettingsModal from './SettingsModal';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Header: React.FC = () => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const handleClearLocalData = () => {
+    localStorage.clear();
+    // You might want to add additional cleanup here if needed
+    alert('Local data has been cleared. The page will now refresh.');
+    window.location.reload();
+  };
+
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <header
       className="w-full flex items-center justify-between px-6 py-4"
       style={{
-        background: "var(--bg)",
-        boxShadow: "var(--header-shadow)",
+        background: 'var(--background)',
+        borderBottom: '1px solid var(--border)',
+        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
       }}
     >
-      <div
-        className="font-dela-gothic text-2xl tracking-wide"
-        style={{ color: "var(--text)" }}
-      >
+      <h1 className="font-dela-gothic text-2xl tracking-wide">
         Threadr
-      </div>
+      </h1>
       <div className="flex items-center gap-4">
-        <div
-          className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden"
-          style={{ background: "var(--bg-light)" }}
+        <button
+          onClick={() => setIsSettingsOpen(true)}
+          className={`p-2 rounded-full transition-colors ${isDark ? 'bg-opacity-10 hover:bg-opacity-20' : 'bg-opacity-5 hover:bg-opacity-10'}`}
+          aria-label="Settings"
         >
-          <img src="../profile.png" className="w-10 h-10 rounded-full" alt="User Profile" />
+          <Cog6ToothIcon 
+            className="w-6 h-6"
+            style={{ 
+              color: isDark ? 'var(--text)' : 'var(--text)' 
+            }} 
+          />
+        </button>
+        <div className="w-10 h-10 rounded-full overflow-hidden">
+          <img src="/profile.png" alt="User" className="w-full h-full" />
         </div>
       </div>
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        onClearData={handleClearLocalData}
+      />
     </header>
   );
 };
