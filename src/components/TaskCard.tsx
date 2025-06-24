@@ -50,14 +50,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, id, onEdit, onDelete, onStatu
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
-    // Don't open detail if clicking on action buttons or dragging
     if ((e.target as HTMLElement).closest('button') || isDragging) {
       return;
     }
     setIsDetailOpen(true);
   };
 
-  // Handle edit button click in the detail modal
   const handleEditInModal = () => {
     if (onEdit) {
       onEdit(task);
@@ -66,7 +64,6 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, id, onEdit, onDelete, onStatu
   };
 
   const handleActionButtonClick = (e: React.MouseEvent) => {
-    // Don't prevent default, so the button's click event is triggered
     e.stopPropagation();
   };
 

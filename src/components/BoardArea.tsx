@@ -50,21 +50,14 @@ const BoardArea: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  // Initialize boardTitle with saved value or default
-  const [boardTitle, setBoardTitle] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('boardTitle') || 'My Tasks';
-    }
-    return 'My Tasks';
-  });
+  const [boardTitle, setBoardTitle] = useState(
+    localStorage.getItem('boardTitle') || 'My Tasks'
+  );
 
-  // Save board title to localStorage when it changes
-  const handleTitleChange = (newTitle: string) => {
-    setBoardTitle(newTitle);
-    localStorage.setItem('boardTitle', newTitle);
-  };
-  
-  // Load status filter from localStorage if available
+  useEffect(() => {
+    localStorage.setItem('boardTitle', boardTitle);
+  }, [boardTitle]);
+
   useEffect(() => {
     try {
       const savedFilter = localStorage.getItem('statusFilter');
@@ -75,8 +68,7 @@ const BoardArea: React.FC = () => {
       console.error('Failed to load status filter from localStorage:', error);
     }
   }, []);
-  
-  // Save status filter to localStorage when it changes
+
   useEffect(() => {
     try {
       localStorage.setItem('statusFilter', statusFilter);
@@ -85,25 +77,21 @@ const BoardArea: React.FC = () => {
     }
   }, [statusFilter]);
 
-  // Load tasks from localStorage on initial render
   useEffect(() => {
     try {
       const savedTasks = localStorage.getItem('tasks');
       if (savedTasks) {
         const parsedTasks = JSON.parse(savedTasks);
-        // Ensure we have valid tasks before setting state
         if (Array.isArray(parsedTasks) && parsedTasks.length > 0) {
           setTasks(parsedTasks);
         }
       }
     } catch (error) {
       console.error('Failed to load tasks from localStorage:', error);
-      // Clear invalid data
       localStorage.removeItem('tasks');
     }
   }, []);
 
-  // Save tasks to localStorage whenever they change
   useEffect(() => {
     try {
       if (tasks.length > 0) {
@@ -118,15 +106,15 @@ const BoardArea: React.FC = () => {
 
   const handleTaskSubmit = (taskData: Omit<Task, 'id' | 'status' | 'createdAt'>) => {
     if (editingTask) {
-      // Update existing task
-      setTasks(tasks.map(t => 
-        t.id === editingTask.id 
-          ? { ...taskData, id: editingTask.id, status: editingTask.status, createdAt: editingTask.createdAt }
-          : t
-      ));
+      setTasks(
+        tasks.map((t) =>
+          t.id === editingTask.id
+            ? { ...taskData, id: editingTask.id, status: editingTask.status, createdAt: editingTask.createdAt }
+            : t
+        )
+      );
       setEditingTask(null);
     } else {
-      // Add new task
       const newTask: Task = {
         ...taskData,
         id: Date.now().toString(),
@@ -149,36 +137,28 @@ const BoardArea: React.FC = () => {
   };
 
   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
-    setTasks(tasks.map(task => 
-      task.id === taskId ? { ...task, status: newStatus } : task
-    ));
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      )
+    );
   };
 
   const handleDeleteTask = (taskId: string) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
-      setTasks(tasks.filter(task => task.id !== taskId));
+      setTasks(tasks.filter((task) => task.id !== taskId));
     }
   };
 
   const filteredTasks = (category: TaskCategory) => {
     return tasks
-      .filter(task => {
-        // Filter by category first
-        if (task.category !== category) return false;
-        
-        // Then apply status filter if not 'all'
-        if (statusFilter !== 'all' && task.status !== statusFilter) return false;
-        
-        return true;
-      })
+      .filter((task) => task.category === category)
+      .filter((task) => (statusFilter === 'all' ? true : task.status === statusFilter))
       .sort((a, b) => {
-        // Sort high priority to the top
         if (a.priority === 'High' && b.priority !== 'High') return -1;
         if (a.priority !== 'High' && b.priority === 'High') return 1;
-        // Sort completed tasks to the bottom
         if (a.status === 'completed' && b.status !== 'completed') return 1;
         if (a.status !== 'completed' && b.status === 'completed') return -1;
-        // Sort by creation date (newest first) if priorities are the same
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
   };
@@ -191,18 +171,14 @@ const BoardArea: React.FC = () => {
     const activeId = active.id;
     const overId = over.id;
 
-    // If dropped on the same category, do nothing
     if (activeId === overId) return;
 
-    // Find the task being dragged
-    const draggedTask = tasks.find(t => t.id === activeId);
+    const draggedTask = tasks.find((t) => t.id === activeId);
     if (!draggedTask) return;
 
-    // If dropped on a category column
     if (CATEGORIES.includes(overId as TaskCategory)) {
-      // Update the category of the dragged task
-      setTasks(prev =>
-        prev.map(task =>
+      setTasks(
+        tasks.map((task) =>
           task.id === activeId
             ? { ...task, category: overId as TaskCategory }
             : task
@@ -213,26 +189,23 @@ const BoardArea: React.FC = () => {
 
   return (
     <div className="p-6">
-      <TaskModal 
+      <TaskModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleTaskSubmit}
         task={editingTask}
       />
-      <TaskHeader 
+      <TaskHeader
         initialTitle={boardTitle}
-        onTitleChange={handleTitleChange}
-        onAddTask={handleAddTask} 
+        onTitleChange={setBoardTitle}
+        onAddTask={handleAddTask}
         statusFilter={statusFilter}
         onStatusFilterChange={(filter) => setStatusFilter(filter)}
       />
 
-      <DndContext 
-        collisionDetection={closestCenter} 
-        onDragEnd={handleDragEnd}
-      >
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <main className="grid grid-cols-1 md:grid-cols-3 gap-2 min-h-[calc(100vh-280px)]">
-          {CATEGORIES.map(category => {
+          {CATEGORIES.map((category) => {
             const tasksInCategory = filteredTasks(category);
             return (
               <DroppableColumn key={category} category={category}>
@@ -243,7 +216,7 @@ const BoardArea: React.FC = () => {
                   <h3 className="font-semibold">{category}</h3>
                 </div>
                 <SortableContext
-                  items={tasksInCategory.map(t => t.id)}
+                  items={tasksInCategory.map((t) => t.id)}
                   strategy={verticalListSortingStrategy}
                 >
                   <div className="space-y-3">
@@ -260,7 +233,7 @@ const BoardArea: React.FC = () => {
                         <p className="text-sm">No tasks in {category} category</p>
                       </div>
                     ) : (
-                      tasksInCategory.map(task => (
+                      tasksInCategory.map((task) => (
                         <TaskCard
                           key={task.id}
                           id={task.id}

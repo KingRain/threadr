@@ -25,11 +25,9 @@ interface TaskModalProps {
 const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }) => {
   const [formData, setFormData] = useState<Omit<Task, 'id' | 'status'>>(() => {
     if (task) {
-      // If editing an existing task, use its values
       const { id, status, ...rest } = task;
       return rest;
     }
-    // Default values for new task
     return {
       title: '',
       description: '',
@@ -39,13 +37,11 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
     };
   });
 
-  // Update form data when task prop changes
   useEffect(() => {
     if (task) {
       const { id, status, ...rest } = task;
       setFormData(rest);
     } else {
-      // Reset to default values for new task
       setFormData({
         title: '',
         description: '',
@@ -72,7 +68,6 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
       ...formData,
     });
     
-    // Reset form
     setFormData({
       title: '',
       description: '',
@@ -85,7 +80,6 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
 
   if (!isOpen) return null;
 
-  // Prevent click propagation to parent elements
   const handleModalClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };

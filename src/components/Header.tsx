@@ -8,7 +8,6 @@ const Header: React.FC = () => {
 
   const handleClearLocalData = () => {
     localStorage.clear();
-    // You might want to add additional cleanup here if needed
     alert('Local data has been cleared. The page will now refresh.');
     window.location.reload();
   };
