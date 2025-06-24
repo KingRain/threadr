@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { PencilIcon, PlusIcon, FunnelIcon, CheckIcon, ClockIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon, FunnelIcon, CheckIcon, ClockIcon, CheckCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
 export type StatusFilter = 'all' | 'pending' | 'completed';
 
@@ -104,15 +104,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
                 <FunnelIcon className="w-4 h-4 mr-2" />
                 Apply Filters ({statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)})
               </span>
-              <svg 
-                className="w-4 h-4 ml-2 text-gray-500" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <ChevronDownIcon className="w-4 h-4 ml-2 text-gray-500" />
             </button>
           </div>
 

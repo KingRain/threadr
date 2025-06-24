@@ -1,54 +1,99 @@
-# React + TypeScript + Vite
+# Threadr - Task Management Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Threadr is a modern, responsive task management application built with React, TypeScript, and Vite. It helps you organize your tasks into different categories (Work, Personal, Other) and manage them efficiently with drag-and-drop functionality.
 
-Currently, two official plugins are available:
+## Screenshots
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<a href="https://ibb.co/DH4G4CVJ"><img src="https://i.ibb.co/ksK3K8H7/image.png" alt="image" border="0"></a>
 
-## Expanding the ESLint configuration
+<a href="https://ibb.co/mrdQkHPY"><img src="https://i.ibb.co/spcLnFXD/image.png" alt="image" border="0"></a>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<a href="https://ibb.co/FkVGttgL"><img src="https://i.ibb.co/5XFqVVBg/image.png" alt="image" border="0"></a>
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+
+
+## Features
+
+- Create, edit, and delete tasks
+- Categorize tasks into Work, Personal, or Other categories
+- Set task priorities (Low, Medium, High, Critical)
+- Track task status (Pending/Completed)
+- Intuitive drag-and-drop interface
+- Filter tasks by status (All, Pending, Completed)
+- Auto-saves to local storage
+- Light and dark theme support
+- Fully responsive design
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- HeroIcons
+- DnD Kit (Drag and Drop)
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js 16+ and npm/yarn/pnpm
+- Git (optional)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/KingRain/threadr.git
+   cd threadr
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn
+   # or
+   pnpm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+4. **Open in browser**
+   The application will be available at `http://localhost:5173`
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── types/         # TypeScript type definitions
+├── App.tsx        # Main application component
+└── main.tsx       # Application entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Additional Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Local Storage
+- All tasks and board title are automatically saved to the browser's local storage
+- No account or backend required
+- Data persists between sessions
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Theme Toggle
+- Switch between light and dark themes
+- Theme preference is saved to local storage
+- System theme detection
+- Smooth transitions between themes
+
+## Assumptions
+
+1. **Data Persistence**: The app uses localStorage for simplicity.
+2. **Authentication**: No authentication is implemented.
+3. **Offline First**: The app is designed to work offline-first with localStorage.
