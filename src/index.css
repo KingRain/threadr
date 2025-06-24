@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --text: oklch(14.36% 0.015 284.32);
+  --background: oklch(96.39% 0.009 292.80);
+  --primary: oklch(46.75% 0.188 279.45);
+  --secondary: oklch(67.34% 0.130 285.95);
+  --accent: oklch(55.11% 0.203 280.95);
+  
+  /* Derived colors for UI consistency */
+  --bg: var(--background);
+  --bg-light: color-mix(in oklch, var(--background), white 10%);
+  --bg-dark: color-mix(in oklch, var(--background), black 10%);
+  --text-muted: color-mix(in oklch, var(--text), var(--background) 40%);
+  --highlight: var(--accent);
+  --border: color-mix(in oklch, var(--text), var(--background) 80%);
+  --border-muted: color-mix(in oklch, var(--text), var(--background) 90%);
+  --header-shadow: 0 1px 2px 0 oklch(0% 0 0 / 0.05);
+  
+  /* Semantic colors */
+  --danger: oklch(65% 0.2 25);
+  --warning: oklch(75% 0.2 80);
+  --success: oklch(65% 0.2 150);
+  --info: oklch(65% 0.2 250);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-dela-gothic {
+  font-family: 'Dela Gothic One', cursive;
+}
